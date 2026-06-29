@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meridian — Portfolio &amp; Design Studio</title>
+    <!-- Google Fonts for Modernist Styling -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Hidden SVG Filter for the diffuse text animation -->
+    <svg viewBox="0 0 0 0" aria-hidden="true"
+         style="position:absolute;width:0;height:0;pointer-events:none">
+      <defs>
+        <filter id="blur-matrix" x="-50%" y="-50%" width="200%" height="200%">
+          <feColorMatrix in="SourceGraphic" type="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 255 -140"/>
+        </filter>
+      </defs>
+    </svg>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

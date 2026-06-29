@@ -1,0 +1,6 @@
+{
+  "name": "Beyond Distance",
+  "description": "Premium athletic event webpage for Beyond Distance 10K & 3K starting-grid race in Ulaanbaatar, Mongolia organized by 7K Club.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
