@@ -122,7 +122,7 @@ export function RegistrationCard({ onSubmitSuccess }: RegistrationCardProps) {
   };
 
   return (
-    <div className="bg-zinc-950 border border-zinc-900 p-6 sm:p-8 md:p-12 relative shadow-2xl rounded-none overflow-hidden">
+    <div className="bg-zinc-950 border border-zinc-900 p-8 sm:p-12 md:p-16 relative shadow-2xl rounded-none overflow-hidden">
       {/* Visual Top Accent Line */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#FF0099]" />
 
@@ -511,7 +511,7 @@ export function RegistrationCard({ onSubmitSuccess }: RegistrationCardProps) {
               </AnimatePresence>
 
               {/* ================= CONTROLLER FOOTER ================= */}
-              <div className="sticky bottom-0 bg-zinc-950/95 backdrop-blur-md md:bg-transparent border-t border-zinc-900 md:border-t-0 p-4 -mx-6 -mb-6 sm:-mx-8 sm:-mb-8 md:p-0 md:mx-0 md:mb-0 flex gap-4 mt-8 z-30 items-center justify-between">
+              <div className="sticky bottom-0 bg-zinc-950/95 backdrop-blur-md md:bg-transparent border-t border-zinc-900 md:border-t-0 p-4 -mx-8 -mb-8 sm:-mx-12 sm:-mb-12 md:p-0 md:mx-0 md:mb-0 flex gap-4 mt-8 z-30 items-center justify-between">
                 {step > 1 ? (
                   <button
                     type="button"
@@ -537,7 +537,7 @@ export function RegistrationCard({ onSubmitSuccess }: RegistrationCardProps) {
                 ) : (
                   <ParticleButton
                     type="submit"
-                    className="w-full md:w-auto py-4 px-8 bg-[#FF0099] text-black font-black uppercase tracking-widest font-mono text-xs hover:bg-white transition-all shadow-[0_0_25px_rgba(255,0,153,0.4)] hover:shadow-[0_0_35px_rgba(255,0,153,0.7)] hover:scale-[1.03] duration-200 flex items-center justify-center gap-2 cursor-pointer ml-auto rounded-none border border-transparent animate-pulse"
+                    className="w-full md:w-auto py-4 px-8 bg-[#FF0099] text-black font-black uppercase tracking-widest font-mono text-xs hover:bg-white transition-all shadow-[0_0_25px_rgba(255,0,153,0.4)] hover:shadow-[0_0_35px_rgba(255,0,153,0.7)] hover:scale-[1.03] duration-200 flex items-center justify-center gap-2 cursor-pointer ml-auto rounded-none border border-transparent register-heartbeat-btn"
                   >
                     <ShieldCheck className="w-4 h-4 text-black" strokeWidth={3} />
                     CONFIRM

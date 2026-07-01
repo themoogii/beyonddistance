@@ -49,8 +49,20 @@ export function ProjectView({ onNavigate }: { onNavigate: (page: string) => void
   ]);
 
   // Registration success pass display state
-  const [showInvoice, setShowInvoice] = useState<Registrant | null>(null);
-  const [hasRegistered, setHasRegistered] = useState(false);
+  const [showInvoice, setShowInvoice] = useState<Registrant | null>(() => {
+    const saved = localStorage.getItem("bd_athlete_info");
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  });
+  const [hasRegistered, setHasRegistered] = useState(() => {
+    return localStorage.getItem("bd_athlete_info") !== null;
+  });
 
   // F1 Reaction Game State
   const [gameState, setGameState] = useState<"idle" | "ready" | "pending" | "go" | "result" | "fault">("idle");
@@ -129,6 +141,8 @@ export function ProjectView({ onNavigate }: { onNavigate: (page: string) => void
       relativeTime: "Joined Just now",
     };
 
+    localStorage.setItem("bd_athlete_info", JSON.stringify(newReg));
+
     setRegistrants((prev) => [newReg, ...prev]);
     setShowInvoice(newReg);
     setHasRegistered(true);
@@ -182,11 +196,10 @@ export function ProjectView({ onNavigate }: { onNavigate: (page: string) => void
       {/* Background Cyber Grid */}
       <div className="absolute inset-0 bg-[#080808]/80 opacity-20 select-none pointer-events-none z-0" style={{ backgroundImage: 'linear-gradient(to right, #222 1px, transparent 1px), linear-gradient(to bottom, #222 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
       
-      <div className="container mx-auto px-6 max-w-7xl relative z-10 flex-grow flex flex-col justify-start items-center pt-12 md:pt-16 pb-0">
+      <div className="container mx-auto px-8 md:px-12 max-w-7xl relative z-10 flex-grow flex flex-col justify-start items-center pt-12 md:pt-16 pb-0">
         
         {/* ================= HERO SECTION ================= */}
         <div className="text-center max-w-3xl mx-auto select-none mb-16 w-full flex flex-col items-center justify-center">
-          <span className="text-xs font-mono tracking-[0.3em] text-[#FF0099] font-bold block mb-3 uppercase">CHAMPIONSHIP GRID REGISTRATION</span>
           <AnimatedCopy
             variant="diffuse"
             onScroll={false}
@@ -211,7 +224,7 @@ export function ProjectView({ onNavigate }: { onNavigate: (page: string) => void
                 element.scrollIntoView({ behavior: "smooth", block: "center" });
               }
             }}
-            className="px-8 py-4 bg-[#FF0099] text-black font-semibold uppercase tracking-widest font-mono text-xs hover:bg-white transition-all shadow-[0_0_20px_rgba(255,0,153,0.3)] hover:shadow-[0_0_35px_rgba(255,0,153,0.6)] hover:scale-105 duration-300 rounded-none flex items-center gap-2 mx-auto cursor-pointer border-none"
+            className="px-8 py-4 bg-[#FF0099] text-black font-semibold uppercase tracking-widest font-mono text-xs hover:bg-white transition-all shadow-[0_0_20px_rgba(255,0,153,0.3)] hover:shadow-[0_0_35px_rgba(255,0,153,0.6)] hover:scale-105 duration-300 rounded-none flex items-center gap-2 mx-auto cursor-pointer border-none register-heartbeat-btn"
             glowColor="#FF0099"
           >
             <ChevronDown className="w-4 h-4 animate-bounce" />
@@ -307,176 +320,60 @@ export function ProjectView({ onNavigate }: { onNavigate: (page: string) => void
           </AnimatePresence>
         </div>
 
-        {/* ========================================================= */}
-        {/* ================= BENTO INFORMATION CARDS ================= */}
-        {/* ========================================================= */}
-        <div className="mt-20 w-full">
-          <div className="border-b border-zinc-900 pb-4 mb-8">
-            <span className="text-[10px] font-mono tracking-widest text-[#FF0099] font-bold block mb-1 uppercase">EVENT COMPASS</span>
-            <h3 className="text-xl font-black uppercase tracking-tight text-white font-sans">CHAMPIONSHIP METRICS</h3>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Card 1: Entry Fee */}
-            <div className="bg-zinc-950/40 border border-zinc-900 p-6 flex flex-col justify-between hover:border-zinc-800 transition-all select-none group">
-              <div className="flex justify-between items-start">
-                <div className="bg-[#FF0099]/10 p-2 text-[#FF0099] group-hover:bg-[#FF0099]/20 transition-all">
-                  <Ticket className="w-5 h-5" />
-                </div>
-                <span className="text-[9px] font-mono text-zinc-600 uppercase">METRIC_01</span>
-              </div>
-              <div className="mt-6">
-                <span className="text-[10px] font-mono text-zinc-500 block uppercase tracking-wide">ENTRY REGISTRATION</span>
-                <span className="text-xl font-black text-white uppercase font-sans mt-1 block">FREE ENTRY</span>
-                <span className="text-[10px] text-zinc-500 mt-1 block">Qualifying open to all citizens</span>
-              </div>
-            </div>
-
-            {/* Card 2: Race Date */}
-            <div className="bg-zinc-950/40 border border-zinc-900 p-6 flex flex-col justify-between hover:border-zinc-800 transition-all select-none group">
-              <div className="flex justify-between items-start">
-                <div className="bg-[#FF0099]/10 p-2 text-[#FF0099] group-hover:bg-[#FF0099]/20 transition-all">
-                  <Calendar className="w-5 h-5" />
-                </div>
-                <span className="text-[9px] font-mono text-zinc-600 uppercase">METRIC_02</span>
-              </div>
-              <div className="mt-6">
-                <span className="text-[10px] font-mono text-zinc-500 block uppercase tracking-wide">RACE CALENDAR</span>
-                <span className="text-xl font-black text-white uppercase font-sans mt-1 block">AUG 29, 2026</span>
-                <span className="text-[10px] text-zinc-500 mt-1 block">Starting lights green at 18:00</span>
-              </div>
-            </div>
-
-            {/* Card 3: Deadline */}
-            <div className="bg-zinc-950/40 border border-zinc-900 p-6 flex flex-col justify-between hover:border-zinc-800 transition-all select-none group">
-              <div className="flex justify-between items-start">
-                <div className="bg-[#FF0099]/10 p-2 text-[#FF0099] group-hover:bg-[#FF0099]/20 transition-all">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <span className="text-[9px] font-mono text-zinc-600 uppercase">METRIC_03</span>
-              </div>
-              <div className="mt-6">
-                <span className="text-[10px] font-mono text-zinc-500 block uppercase tracking-wide">REGISTRATION LIMIT</span>
-                <span className="text-xl font-black text-white uppercase font-sans mt-1 block">AUG 15, 2026</span>
-                <span className="text-[10px] text-zinc-500 mt-1 block">Late registrations won't be timed</span>
-              </div>
-            </div>
-
-            {/* Card 4: Location */}
-            <div className="bg-zinc-950/40 border border-zinc-900 p-6 flex flex-col justify-between hover:border-zinc-800 transition-all select-none group">
-              <div className="flex justify-between items-start">
-                <div className="bg-[#FF0099]/10 p-2 text-[#FF0099] group-hover:bg-[#FF0099]/20 transition-all">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <span className="text-[9px] font-mono text-zinc-600 uppercase">METRIC_04</span>
-              </div>
-              <div className="mt-6">
-                <span className="text-[10px] font-mono text-zinc-500 block uppercase tracking-wide">CIRCUIT LOCATION</span>
-                <span className="text-xl font-black text-white uppercase font-sans mt-1 block">NATIONAL UB</span>
-                <span className="text-[10px] text-zinc-500 mt-1 block">National Park South Gate Start</span>
-              </div>
-            </div>
-
-            {/* Card 5: Distance */}
-            <div className="bg-zinc-950/40 border border-zinc-900 p-6 flex flex-col justify-between hover:border-zinc-800 transition-all select-none group">
-              <div className="flex justify-between items-start">
-                <div className="bg-[#FF0099]/10 p-2 text-[#FF0099] group-hover:bg-[#FF0099]/20 transition-all">
-                  <Activity className="w-5 h-5" />
-                </div>
-                <span className="text-[9px] font-mono text-zinc-600 uppercase">METRIC_05</span>
-              </div>
-              <div className="mt-6">
-                <span className="text-[10px] font-mono text-zinc-500 block uppercase tracking-wide">TRACK LENGTHS</span>
-                <span className="text-xl font-black text-white uppercase font-sans mt-1 block">10K &amp; 3K GP</span>
-                <span className="text-[10px] text-zinc-500 mt-1 block">Grand Prix for elite times</span>
-              </div>
-            </div>
-
-            {/* Card 6: Slots Remaining */}
-            <div className="bg-zinc-950/40 border border-zinc-900 p-6 flex flex-col justify-between hover:border-zinc-800 transition-all select-none group">
-              <div className="flex justify-between items-start">
-                <div className="bg-[#FF0099]/10 p-2 text-[#FF0099] group-hover:bg-[#FF0099]/20 transition-all">
-                  <Flame className="w-5 h-5" />
-                </div>
-                <span className="text-[9px] font-mono text-zinc-600 uppercase">METRIC_06</span>
-              </div>
-              <div className="mt-6">
-                <span className="text-[10px] font-mono text-zinc-500 block uppercase tracking-wide">SLOTS REMAINING</span>
-                <span className="text-xl font-black text-white uppercase font-sans mt-1 block">142 / 500</span>
-                <span className="text-[10px] text-zinc-500 mt-1 block">Capped cohort entry to ensure safety</span>
-              </div>
-            </div>
-
-            {/* Card 7: Qualification Rules */}
-            <div className="bg-zinc-950/40 border border-zinc-900 p-6 flex flex-col justify-between hover:border-zinc-800 transition-all select-none group col-span-1 sm:col-span-2">
-              <div className="flex justify-between items-start">
-                <div className="bg-[#FF0099]/10 p-2 text-[#FF0099] group-hover:bg-[#FF0099]/20 transition-all">
-                  <Award className="w-5 h-5" />
-                </div>
-                <span className="text-[9px] font-mono text-zinc-600 uppercase">METRIC_07</span>
-              </div>
-              <div className="mt-6">
-                <span className="text-[10px] font-mono text-zinc-500 block uppercase tracking-wide">GRAND PRIX QUALIFICATION LIMITS</span>
-                <span className="text-xl font-black text-white uppercase font-sans mt-1 block">MEN &lt; 42M | WOMEN &lt; 48M</span>
-                <span className="text-[10px] text-zinc-500 mt-1 block">Beating this target places you directly on the Grand Prix Starting Grid</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* ======================================================== */}
-        {/* ================= LIVE COMPETE FEED BLOCK =============== */}
+        {/* ==================== PARTICIPANTS ====================== */}
         {/* ======================================================== */}
-        <div className="max-w-3xl mx-auto w-full mt-16 bg-zinc-950/30 border border-zinc-900/60 p-8 space-y-6 select-none relative">
-          <div className="flex justify-between items-center border-b border-zinc-900 pb-4">
-            <div>
-              <span className="text-[10px] font-mono tracking-widest text-[#FF0099] font-bold block mb-1 uppercase">SOCIAL SIGNAL</span>
-              <h4 className="text-md font-bold uppercase text-white font-sans tracking-tight">LIVE COMPETE FEED</h4>
+        {hasRegistered && (
+          <div className="max-w-3xl mx-auto w-full mt-20 bg-zinc-950/30 border border-zinc-900/60 p-8 space-y-6 select-none relative">
+            <div className="flex justify-between items-center border-b border-zinc-900 pb-4">
+              <div>
+                <h4 className="text-md font-bold uppercase text-white font-sans tracking-tight">PARTICIPANTS</h4>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
+                <span className="text-[10px] font-mono text-zinc-500 uppercase">CONNECTED</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
-              <span className="text-[10px] font-mono text-zinc-500 uppercase">CONNECTED</span>
-            </div>
-          </div>
 
-          <div className="space-y-3 max-h-[380px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-zinc-800">
-            <AnimatePresence initial={false}>
-              {registrants.map((reg, index) => {
-                const isQual = isQualifiedPro(reg.gender, reg.estMins);
-                return (
-                  <motion.div 
-                    key={reg.id} 
-                    initial={index === 0 ? { opacity: 0, y: -20, height: 0 } : false}
-                    animate={{ opacity: 1, y: 0, height: "auto" }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="flex justify-between items-center p-4 bg-zinc-950 border border-zinc-900/60 hover:border-zinc-800 font-mono text-xs select-none"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center font-bold text-[#FF0099] uppercase text-[10px]">
-                        {reg.name.split(" ").map(n => n[0]).join("")}
+            <div className="space-y-3 max-h-[380px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-zinc-800">
+              <AnimatePresence initial={false}>
+                {registrants.map((reg, index) => {
+                  const isQual = isQualifiedPro(reg.gender, reg.estMins);
+                  return (
+                    <motion.div 
+                      key={reg.id} 
+                      initial={index === 0 ? { opacity: 0, y: -20, height: 0 } : false}
+                      animate={{ opacity: 1, y: 0, height: "auto" }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      className="flex justify-between items-center p-4 bg-zinc-950 border border-zinc-900/60 hover:border-zinc-800 font-mono text-xs select-none"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center font-bold text-[#FF0099] uppercase text-[10px]">
+                          {reg.name.split(" ").map(n => n[0]).join("")}
+                        </div>
+                        <div>
+                          <div className="font-bold text-white uppercase">{reg.name}</div>
+                          <div className="text-[9px] text-zinc-500 uppercase mt-0.5">{reg.bracket} &bull; {reg.assignedNo}</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="font-bold text-white uppercase">{reg.name}</div>
-                        <div className="text-[9px] text-zinc-500 uppercase mt-0.5">{reg.bracket} &bull; {reg.assignedNo}</div>
+                      
+                      <div className="text-right flex flex-col items-end gap-1.5">
+                        <span className={`px-2 py-0.5 text-[8px] rounded-sm font-bold uppercase tracking-wider ${
+                          isQual ? "bg-green-950/80 text-green-400 border border-green-900/40" : "bg-zinc-900 text-zinc-400 border border-zinc-850"
+                        }`}>
+                          {isQual ? "PRO 3K COMPETE" : "10K ENTRY"}
+                        </span>
+                        <div className="text-[9px] text-zinc-500 uppercase">
+                          {reg.relativeTime || "Joined recently"}
+                        </div>
                       </div>
-                    </div>
-                    
-                    <div className="text-right flex flex-col items-end gap-1.5">
-                      <span className={`px-2 py-0.5 text-[8px] rounded-sm font-bold uppercase tracking-wider ${
-                        isQual ? "bg-green-950/80 text-green-400 border border-green-900/40" : "bg-zinc-900 text-zinc-400 border border-zinc-850"
-                      }`}>
-                        {isQual ? "PRO 3K COMPETE" : "10K ENTRY"}
-                      </span>
-                      <div className="text-[9px] text-zinc-500 uppercase">
-                        {reg.relativeTime || "Joined recently"}
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
+        )}
 
       </div>
 
@@ -501,7 +398,7 @@ export function ProjectView({ onNavigate }: { onNavigate: (page: string) => void
           {/* =========== FULL SCREEN PINK REACTION GAME SECTION ===== */}
           {/* ======================================================== */}
           <section className="w-full bg-[#FF0099] text-black py-32 md:py-48 relative z-10 flex flex-col items-center justify-center min-h-screen">
-            <div className="container mx-auto px-6 max-w-4xl flex flex-col justify-center space-y-16">
+            <div className="container mx-auto px-8 md:px-12 max-w-4xl flex flex-col justify-center space-y-16">
               
               <div className="text-center space-y-6">
                 <span className="text-xs font-mono tracking-[0.35em] text-black/75 font-bold block uppercase">GRID NEURAL SYSTEM</span>

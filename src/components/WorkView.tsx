@@ -130,7 +130,7 @@ export function WorkView({ onNavigate }: { onNavigate: (page: string) => void })
     <div className="bg-[#080808] min-h-screen text-white safe-page-wrapper pb-16 font-sans">
       
       {/* Title Header Section */}
-      <div className="container mx-auto px-6 max-w-7xl pt-12 md:pt-16 select-none">
+      <div className="container mx-auto px-8 md:px-12 max-w-7xl pt-12 md:pt-16 select-none">
         <div className="border-b border-zinc-900 pb-12 flex justify-between items-end">
           <div>
             <span className="text-xs font-mono tracking-[0.3em] text-[#FF0099] font-bold block mb-2 uppercase">EQUIPMENT LAB</span>

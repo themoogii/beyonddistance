@@ -58,7 +58,7 @@ export function Navbar({ onLogoClick, activePage }: NavbarProps) {
       <div className="container py-4 md:py-5">
         {/* Left Column: Clock / Race Date */}
         <div className="nav-clock animate-fade-in">
-          <p className="type-mono font-bold tracking-wider text-white text-xs sm:text-sm flex items-center flex-wrap gap-x-2">
+          <p className="type-mono font-bold tracking-wider text-white text-[9px] sm:text-xs md:text-sm flex items-center flex-wrap gap-x-1.5 sm:gap-x-2">
             <span className="text-[#FF0099]">AUG 29, 2026</span>
             <span className="text-zinc-600 font-normal">|</span>
             <span className="font-semibold text-white">
@@ -74,7 +74,7 @@ export function Navbar({ onLogoClick, activePage }: NavbarProps) {
                 :
               </span>
               {minutes?.padStart(2, "0") || "25"}{" "}
-              <span className="text-zinc-400 font-normal text-[10px]">UB</span>
+              <span className="text-zinc-400 font-normal text-[8px] sm:text-[10px]">UB</span>
             </span>
           </p>
         </div>
@@ -87,7 +87,7 @@ export function Navbar({ onLogoClick, activePage }: NavbarProps) {
               width="100"
               height="100"
               viewBox="0 0 1000 1000"
-              className="w-11 h-11"
+              className="w-8 h-8 sm:w-11 sm:h-11"
               id="header-logo-svg"
               style={{ filter: "drop-shadow(0 0 6px rgba(0, 119, 68, 0.25))" }}
             >
@@ -103,7 +103,7 @@ export function Navbar({ onLogoClick, activePage }: NavbarProps) {
 
         {/* Right Column: Location marker */}
         <div className="nav-location text-white">
-          <p className="type-mono">
+          <p className="type-mono text-[9px] sm:text-xs md:text-sm">
             <ion-icon name="triangle-sharp" style={{ verticalAlign: "middle", marginRight: "3px" }}></ion-icon> ULAANBAATAR, MN
           </p>
         </div>

@@ -35,7 +35,7 @@ const FlipLink = ({ label, href, className = "" }: { label: string; href: string
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative inline-flex items-center gap-3 py-4 text-2xl md:text-5xl font-black uppercase tracking-tightest leading-none outline-none group focus:outline-none transition-all duration-300 bg-transparent border-none text-left w-full justify-start ${className}`}
+      className={`relative inline-flex items-center gap-3 py-4 text-lg md:text-3xl font-black uppercase tracking-tightest leading-none outline-none group focus:outline-none transition-all duration-300 bg-transparent border-none text-left w-full justify-start ${className}`}
       style={{
         fontFamily: "'Roboto Flex', sans-serif"
       }}
@@ -99,7 +99,7 @@ const FlipLink = ({ label, href, className = "" }: { label: string; href: string
           y: isHovered ? -4 : 0
         }}
         transition={{ type: "spring", stiffness: 350, damping: 18 }}
-        className="text-xl md:text-3xl ml-1 font-mono flex items-center justify-center select-none animate-none"
+        className="text-base md:text-2xl ml-1 font-mono flex items-center justify-center select-none animate-none"
       >
         ↗
       </motion.span>
@@ -207,7 +207,7 @@ export function ContactView({ onNavigate }: { onNavigate: (page: string) => void
       {/* ==================================================
           SECTION 1 — HERO / CONTACT FORM SECTION
           ================================================== */}
-      <section className="relative w-full flex flex-col justify-start items-center px-6 md:px-12 pt-12 md:pt-16 pb-16 z-10">
+      <section className="relative w-full flex flex-col justify-start items-center px-8 md:px-16 pt-12 md:pt-16 pb-16 z-10">
         
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -417,7 +417,7 @@ export function ContactView({ onNavigate }: { onNavigate: (page: string) => void
       {/* ==================================================
           SECTION 2 — SOCIAL CONTACT
           ================================================== */}
-      <section className="relative w-full flex flex-col justify-center items-center px-6 md:px-12 pt-6 pb-44 md:pt-8 md:pb-60 z-10">
+      <section className="relative w-full flex flex-col justify-center items-center px-8 md:px-16 pt-6 pb-44 md:pt-8 md:pb-60 z-10">
         
         <div className="container max-w-5xl mx-auto flex flex-col items-center">
           

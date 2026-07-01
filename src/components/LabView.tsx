@@ -168,7 +168,7 @@ export function LabView({ onNavigate }: { onNavigate: (page: string) => void }) 
 
       {/* 2. Club Info Concept (Black background, red text) */}
       <section className="lab-about bg-[#000] text-[#FF0099] select-none py-32 md:py-44 flex flex-col items-center justify-center">
-        <div className="container max-w-[1200px] flex flex-col gap-12 md:gap-16 px-6">
+        <div className="container max-w-[1200px] flex flex-col gap-12 md:gap-16 px-8 md:px-12">
           <AnimatedCopy
             variant="slide"
             onScroll={true}
@@ -198,7 +198,7 @@ export function LabView({ onNavigate }: { onNavigate: (page: string) => void }) 
         </div>
 
         {/* Floating centered statement */}
-        <div className="pie-center-text relative z-10 text-center max-w-[1000px] px-6 select-none">
+        <div className="pie-center-text relative z-10 text-center max-w-[1000px] px-8 md:px-12 select-none">
           <AnimatedCopy
             variant="diffuse"
             onScroll={true}
@@ -258,7 +258,7 @@ export function LabView({ onNavigate }: { onNavigate: (page: string) => void }) 
 
       {/* 5. INTERACTIVE FONT EXPERIMENT */}
       <section className="bg-black text-[#FF0099] py-24 select-none border-t border-white/10 flex flex-col items-center">
-        <div className="container px-6 flex flex-col gap-6 w-full">
+        <div className="container px-8 md:px-12 flex flex-col gap-6 w-full">
           <div>
             <h2 className="font-sans font-black text-4xl md:text-6xl tracking-tight uppercase text-[#FF0099]">
               LAB 02: REACTION TEST
@@ -320,7 +320,7 @@ export function LabView({ onNavigate }: { onNavigate: (page: string) => void }) 
 
       {/* 6. Crews list sections */}
       <section className="clients-section bg-[#FF0099] text-[#000] py-24 border-t border-black/15 select-none">
-        <div className="container px-6">
+        <div className="container px-8 md:px-12">
           <h2 className="font-sans font-black text-4xl md:text-6xl tracking-tight uppercase">
             REGULATORY COUNCIL &amp; CREW
           </h2>

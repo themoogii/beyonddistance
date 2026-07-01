@@ -202,32 +202,23 @@ export function MenuOverlay({ isOpen, onClose, onNavigate }: MenuOverlayProps) {
       {/* Menu HTML Layout Overlay */}
       <div className="menu-content h-full flex flex-col justify-between">
         {/* Top bar */}
-        <div className="menu-header-row">
-          <button
-            onClick={onClose}
-            className="type-mono flex items-center justify-center gap-2 cursor-pointer border border-[#FF0099]/30 px-4 py-2 hover:bg-[#FF0099] hover:text-[#000] rounded-sm transition-all text-[#FF0099]"
-            id="menu-close-btn"
-          >
-            <ion-icon name="close-sharp" style={{ fontSize: "1.2rem", verticalAlign: "middle" }}></ion-icon> CLOSE
-          </button>
+        <div className="menu-header-row" style={{ justifyContent: "flex-end" }}>
           
-          <div className="flex gap-4">
+          <div className="flex gap-4 text-[10px] sm:text-xs">
             <a
               href="https://www.instagram.com/the7k.club"
               target="_blank"
               rel="noopener noreferrer"
-              className="type-mono hover:underline"
+              className="type-mono hover:underline text-[10px] sm:text-xs"
             >
               Instagram
             </a>
-            <span className="text-[#FF0099]/50">/</span>
+            <span className="text-[#FF0099]/50 text-[10px] sm:text-xs">/</span>
             <a
-              href="https://www.tiktok.com/@the7k.club"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="type-mono hover:underline"
+              href="tel:+97680792969"
+              className="type-mono hover:underline text-[10px] sm:text-xs"
             >
-              TikTok
+              Phone
             </a>
           </div>
         </div>

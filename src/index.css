@@ -167,8 +167,8 @@ a, p.type-mono, .type-mono {
 /* Container */
 .container {
   width: 100%;
-  padding: 2rem;
-  max-width: 2000px;
+  padding: 3rem 2.5rem;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -187,7 +187,7 @@ a, p.type-mono, .type-mono {
   p.lg { font-size: 1.65rem; }
   
   .container {
-    padding: 1.25rem;
+    padding: 2rem 1.75rem;
   }
 }
 
@@ -1149,5 +1149,34 @@ footer {
 .input-with-icon textarea:focus ~ svg {
   color: #FF0099;
 }
+
+/* Subtle slow pink-glow pulse animation that increases frequency on hover */
+@keyframes heartbeat-glow {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(255, 0, 153, 0.25), 0 0 4px rgba(255, 0, 153, 0.1);
+  }
+  20% {
+    box-shadow: 0 0 26px rgba(255, 0, 153, 0.7), 0 0 14px rgba(255, 0, 153, 0.4);
+  }
+  40% {
+    box-shadow: 0 0 14px rgba(255, 0, 153, 0.3), 0 0 6px rgba(255, 0, 153, 0.15);
+  }
+  60% {
+    box-shadow: 0 0 32px rgba(255, 0, 153, 0.8), 0 0 16px rgba(255, 0, 153, 0.5);
+  }
+  80% {
+    box-shadow: 0 0 14px rgba(255, 0, 153, 0.25), 0 0 5px rgba(255, 0, 153, 0.1);
+  }
+}
+
+.register-heartbeat-btn {
+  animation: heartbeat-glow 3.5s infinite ease-in-out;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.register-heartbeat-btn:hover {
+  animation: heartbeat-glow 1.1s infinite ease-in-out !important;
+}
+
 
 

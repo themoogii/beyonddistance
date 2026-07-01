@@ -167,7 +167,7 @@ export function ItineraryView({ onNavigate }: { onNavigate: (page: string) => vo
         }} 
       />
 
-      <div className="container mx-auto px-6 max-w-6xl pt-12 md:pt-16 select-none relative z-10">
+      <div className="container mx-auto px-8 md:px-12 max-w-6xl pt-12 md:pt-16 select-none relative z-10">
         
         {/* Title Header Section */}
         <div className="border-b border-zinc-900 pb-8 mb-10">

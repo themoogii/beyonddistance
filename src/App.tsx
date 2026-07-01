@@ -16,11 +16,108 @@ import { LabView } from "./components/LabView";
 import { ProjectView } from "./components/ProjectView";
 import { ContactView } from "./components/ContactView";
 import { ItineraryView } from "./components/ItineraryView";
+import { RaceHUD } from "./components/RaceHUD";
+import { RaceFinishFooter } from "./components/RaceFinishFooter";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [activePage, setActivePage] = useState("/"); // "/" | "/itinerary" | "/work" | "/lab" | "/project" | "/contact"
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // --- Live Telemetry (Distance Covered & Enter Key Taps) ---
+  const [distance, setDistance] = useState<number>(() => {
+    const saved = localStorage.getItem("bd_run_distance");
+    return saved ? parseFloat(saved) : 0;
+  });
+
+  const [enterCount, setEnterCount] = useState<number>(() => {
+    const saved = localStorage.getItem("bd_run_enter_count");
+    return saved ? parseInt(saved, 10) : 0;
+  });
+
+  const [startTime, setStartTime] = useState<number>(() => {
+    const saved = localStorage.getItem("bd_run_start_time");
+    if (saved) return parseInt(saved, 10);
+    const now = Date.now();
+    localStorage.setItem("bd_run_start_time", String(now));
+    return now;
+  });
+
+  // Keep localStorage sync in separate effects
+  useEffect(() => {
+    localStorage.setItem("bd_run_distance", String(distance));
+  }, [distance]);
+
+  useEffect(() => {
+    localStorage.setItem("bd_run_enter_count", String(enterCount));
+  }, [enterCount]);
+
+  const handleResetRun = () => {
+    setDistance(0);
+    setEnterCount(0);
+    const now = Date.now();
+    setStartTime(now);
+    localStorage.setItem("bd_run_distance", "0");
+    localStorage.setItem("bd_run_enter_count", "0");
+    localStorage.setItem("bd_run_start_time", String(now));
+  };
+
+  // Passive Telemetry Accumulator listeners
+  useEffect(() => {
+    if (isLoading) return;
+
+    // A. Scroll Accumulation: 1px of scrolling = 0.1 meters
+    let prevScrollY = window.scrollY;
+    const handleScrollDistance = () => {
+      const currentScrollY = window.scrollY;
+      const diff = Math.abs(currentScrollY - prevScrollY);
+      if (diff > 0) {
+        setDistance((prev) => prev + diff * 0.1);
+      }
+      prevScrollY = currentScrollY;
+    };
+
+    // B. Mouse Movement Accumulation: 1px of cursor drag = 0.015 meters
+    let prevMouseX: number | null = null;
+    let prevMouseY: number | null = null;
+    const handleMouseMoveDistance = (e: MouseEvent) => {
+      if (prevMouseX !== null && prevMouseY !== null) {
+        const dx = e.clientX - prevMouseX;
+        const dy = e.clientY - prevMouseY;
+        const diff = Math.sqrt(dx * dx + dy * dy);
+        if (diff > 0 && diff < 500) {
+          setDistance((prev) => prev + diff * 0.015);
+        }
+      }
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
+    };
+
+    // C. Focus active elapsed time background tick: 0.1 meters per sec when tab is active
+    const timeInterval = setInterval(() => {
+      if (document.hasFocus()) {
+        setDistance((prev) => prev + 0.1);
+      }
+    }, 1000);
+
+    // D. Global Enter Key press listener
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        setEnterCount((prev) => prev + 1);
+      }
+    };
+
+    window.addEventListener("scroll", handleScrollDistance, { passive: true });
+    window.addEventListener("mousemove", handleMouseMoveDistance, { passive: true });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("scroll", handleScrollDistance);
+      window.removeEventListener("mousemove", handleMouseMoveDistance);
+      window.removeEventListener("keydown", handleKeyDown);
+      clearInterval(timeInterval);
+    };
+  }, [isLoading]);
 
   // 1. Initial preloader seen validator
   useEffect(() => {
@@ -319,6 +416,16 @@ export default function App() {
         {renderActiveView()}
       </main>
 
+      {/* 5. Live Telemetry Race Finish Footer */}
+      <RaceFinishFooter
+        distance={distance}
+        enterCount={enterCount}
+        startTime={startTime}
+        activePage={activePage}
+        onNavigate={handlePageNavigation}
+        onReset={handleResetRun}
+      />
+
       {/* 6. Centered Pill Menu Toggle Button */}
       <div
         className={`menu-toggle ${isMenuOpen ? "open" : ""}`}
@@ -334,6 +441,13 @@ export default function App() {
           <span />
         </div>
       </div>
+
+      {/* 7. Live Telemetry HUD */}
+      <RaceHUD
+        distance={distance}
+        enterCount={enterCount}
+        onReset={handleResetRun}
+      />
     </div>
   );
 }
