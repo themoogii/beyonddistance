@@ -224,7 +224,7 @@ export function ContactView({ onNavigate }: { onNavigate: (page: string) => void
             Want to connect?
           </h1>
           
-          <p className="mt-4 md:mt-6 text-zinc-400 font-mono text-[11px] sm:text-sm uppercase tracking-widest leading-relaxed max-w-xl mx-auto">
+          <p className="mt-4 md:mt-6 text-zinc-400 font-mono text-[11px] sm:text-sm uppercase tracking-widest leading-relaxed max-w-xl mx-auto text-center">
             Feel free to email me or use the form below ▼ with any questions
           </p>
         </motion.div>
